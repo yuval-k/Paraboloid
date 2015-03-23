@@ -38,24 +38,6 @@ def save_files(num_petals, focal_length, maxx, maximize_r, screwrad, supportcirc
     pr.draw_svg()
     pr.draw_circle()
 
-
-def draw_parabola_in_free_cad():
-    x =1
-    delta = 1
-    points = 20
-    fx = f(x)
-    gem = App.ActiveDocument.Sketch002.addGeometry(Part.Line(App.Vector(0,0,0),App.Vector(x,fx,0)))
-
-    for i in range(points - 1):
-        prevx = x
-        fprevx = fx
-        x = x + delta
-        fx = f(x)
-        prevgem = gem
-        gem = App.ActiveDocument.Sketch002.addGeometry(Part.Line(App.Vector(prevx,fprevx,0),App.Vector(x,fx,0)))
-        App.ActiveDocument.Sketch002.addConstraint(Sketcher.Constraint('Coincident',prevgem,2,gem,1))
-
-
 class ParabolicReflector(object):
     def __init__(self, num_petals, focal_length, maxx, maximize_r, screwrad, supportcirclesize, screwhole):
         self.num_petals = num_petals
@@ -79,18 +61,17 @@ class ParabolicReflector(object):
         xyroot = (x**2+4*(self.focal_length**2))**.5
         log_term = (x + xyroot )/(2*self.focal_length)
         return (  x*xyroot + 4*(self.focal_length**2)*math.log(log_term)   )/(4*self.focal_length)
-        #return x+((x**3)/(24*(self.focal_length**2)))
 
     def deltaw(self, x, r1):
         w = 2*math.pi*(r1-x)
 	return w / (2*self.num_petals)
-        # return (math.pi/self.num_petals)*((x**3)/(24*self.focal_length**2))
 
     def r_l(self,x):
         r1_ = self.r1(x)
         deltaw_ = self.deltaw(x, r1_)
         return r1_, math.pi*r1_/self.num_petals - deltaw_
-        return r1_*math.cos(math.pi/self.num_petals)-deltaw_*math.sin(math.pi/self.num_petals), r1_*math.sin(math.pi/self.num_petals)-deltaw_*math.cos(math.pi/self.num_petals)
+        # the instructable used the calculation below, not sure why.
+        # return r1_*math.cos(math.pi/self.num_petals)-deltaw_*math.sin(math.pi/self.num_petals), r1_*math.sin(math.pi/self.num_petals)-deltaw_*math.cos(math.pi/self.num_petals)
 
     def generate_points(self, delta = .5):
         list_of_ponts = [(0,0)]
