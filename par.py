@@ -10,16 +10,16 @@ def main():
     parser = argparse.ArgumentParser(description='Creates petals for parabolic reflectors')
     parser.add_argument('--number', '-n', dest='numpetals', type=int, default=16,
         help='How many petals are going to be in a circle. 16 is default')
-    parser.add_argument('--focal-length','-fl', dest='focallength', type=int, required = True,
+    parser.add_argument('--focal-length','-fl', dest='focallength', type=float, required = True,
         help='The focal length in CM')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('--max-x','-x', dest='maxx', type=int,
+    group.add_argument('--max-x','-x', dest='maxx', type=float,
                 help='Max x (the x value of the parabolla)')
-    group.add_argument('--max-r','-r', dest='maxr', type=int,
+    group.add_argument('--max-r','-r', dest='maxr', type=float,
                 help='Approximage length of petal.')
     parser.add_argument('--screw-offset', dest='screwrad', type=float, default = 5*.8,
                 help='Offset of screw hole from petal\support circle center')
-    parser.add_argument('--support-circle-size', '-scs', dest='supportsize', type=int, default = 6,
+    parser.add_argument('--support-circle-size', '-scs', dest='supportsize', type=float, default = 6,
                 help='Size of the support circle size')
     parser.add_argument('--screw-hole-size', '-shs', dest='screwhole', type=float, default = .3,
     help='Size of the screw hole in CM')
@@ -62,16 +62,23 @@ class ParabolicReflector(object):
         log_term = (x + xyroot )/(2*self.focal_length)
         return (  x*xyroot + 4*(self.focal_length**2)*math.log(log_term)   )/(4*self.focal_length)
 
-    def deltaw(self, x, r1):
-        w = 2*math.pi*(r1-x)
-	return w / (2*self.num_petals)
-
     def r_l(self,x):
+        # get the length of the petal at point x
         r1_ = self.r1(x)
-        deltaw_ = self.deltaw(x, r1_)
-        return r1_, math.pi*r1_/self.num_petals - deltaw_
-        # the instructable used the calculation below, not sure why.
-        # return r1_*math.cos(math.pi/self.num_petals)-deltaw_*math.sin(math.pi/self.num_petals), r1_*math.sin(math.pi/self.num_petals)-deltaw_*math.cos(math.pi/self.num_petals)
+
+        # we need r-h
+
+        # angle - the angle of the arch of the petal (the angle of a petal time x/r to compensate for the w)
+        angle = 2*math.pi*x/(r1_*self.num_petals)
+        # l = half the chord
+        l = r1_*math.sin(angle/2)
+        # r = r1-h (radius till the chord)
+        r = r1_*math.cos(angle/2)
+        return r,l
+        # l = half the width of the petal (for symmertry)
+        # the radius of the parabolid at point x is 2*pi*x so to get half the width of a petal, devide by 2*num_petals
+        return r1_, math.pi*x/self.num_petals
+
 
     def generate_points(self, delta = .5):
         list_of_ponts = [(0,0)]
