@@ -1,5 +1,4 @@
 import math
-import argparse
 import svgwrite
 from svgwrite import cm
 
@@ -7,22 +6,24 @@ from svgwrite import cm
 def main():
 
     import argparse   # only supported on python 2.7, rest of this script may be used with python 2.6
-    parser = argparse.ArgumentParser(description='Creates petals for parabolic reflectors')
-    parser.add_argument('--number', '-n', dest='numpetals', type=int, default=16,
-        help='How many petals are going to be in a circle. 16 is default')
-    parser.add_argument('--focal-length','-fl', dest='focallength', type=float, required = True,
+    parser = argparse.ArgumentParser(description='Creates petals for parabolic reflectors. this will create two files: petal.svg with the drawing of the petal, and discs.svg that draws the disks that can be used to attach all the petals together.')
+    parser.add_argument('--number', '-n', dest='numpetals', type=int, default=8,
+        help='How many petals are going to be in a circle. is default')
+    parser.add_argument('--focal-length','-fl', dest='focallength', type=float, default = 30,
         help='The focal length in CM')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--max-x','-x', dest='maxx', type=float,
-                help='Max x (the x value of the parabolla)')
+                help='Max x (the x value of the parabolla). mutually exclusive with max r')
     group.add_argument('--max-r','-r', dest='maxr', type=float,
-                help='Approximage length of petal.')
+                help='Approximage length of petal in cm. mutually exclusive with max x')
     parser.add_argument('--screw-offset', dest='screwrad', type=float, default = 5*.8,
-                help='Offset of screw hole from petal\support circle center')
+                help='Offset of screw hole from petal\support circle center in cm')
     parser.add_argument('--support-circle-size', '-scs', dest='supportsize', type=float, default = 6,
-                help='Size of the support circle size')
+                help='Size of the support circle size in cm')
     parser.add_argument('--screw-hole-size', '-shs', dest='screwhole', type=float, default = .3,
-    help='Size of the screw hole in CM')
+    help='Size of the screw hole in cm')
+    parser.add_argument('--center-hole-size', '-chs', dest='centerhole', type=float, default = .3,
+    help='Size of the center hole in the disc in cm')
 
     args = parser.parse_args()
     if args.maxr is not None:
@@ -31,22 +32,27 @@ def main():
     else:
         maxx = args.maxx
         maximize_r = False
-    save_files(args.numpetals, args.focallength, maxx ,maximize_r, args.screwrad, args.supportsize, args.screwhole)
+    save_files(args.numpetals, args.focallength, maxx ,maximize_r, args.screwrad, args.supportsize, args.screwhole, args.centerhole, .1)
 
-def save_files(num_petals, focal_length, maxx, maximize_r, screwrad, supportcirclesize, screwhole):
-    pr = ParabolicReflector(num_petals, focal_length, maxx, maximize_r, screwrad, supportcirclesize, screwhole)
+def save_files(num_petals, focal_length, maxx, maximize_r, screwrad, supportcirclesize, screwhole, centerhole, stroke_width):
+    pr = ParabolicReflector(num_petals, focal_length, maxx, maximize_r, screwrad, supportcirclesize, screwhole, centerhole, stroke_width)
     pr.draw_svg()
     pr.draw_circle()
 
 class ParabolicReflector(object):
-    def __init__(self, num_petals, focal_length, maxx, maximize_r, screwrad, supportcirclesize, screwhole):
+    def __init__(self, num_petals, focal_length, max_value, maximize_r, screwrad, supportcirclesize, screwhole, centerhole, stroke_width):
         self.num_petals = num_petals
         self.focal_length = focal_length
-        self.maxx = maxx
+        self.max_value = max_value
         self.maximize_r = maximize_r
         self.screwrad = screwrad
         self.supportcirclesize = supportcirclesize
         self.screwhole = screwhole
+        self.centerhole = centerhole
+        self.stroke_width = stroke_width
+        self.delta = .5
+        self.margin_x = 2
+        self.margin_y = 2
 
     def get_r_or_x(self, r, x):
         if self.maximize_r:
@@ -66,55 +72,55 @@ class ParabolicReflector(object):
         # get the length of the petal at point x
         r1_ = self.r1(x)
 
-        # we need r-h
-
         # angle - the angle of the arch of the petal (the angle of a petal time x/r to compensate for the w)
+        # x is the radius we want and r1 is the radius we have; so the real circl we want is not of angle 2pi/(num_petals); 
+        # but rather need to take into account that along the circumference the error (w) is of 2pi(r-x); so the angle is compenstated accordingly
+        # angel of leaf = ([r - (r-x)]/r)*2pi/numpetals = (x/r)*2pi/numpetals
         angle = 2*math.pi*x/(r1_*self.num_petals)
+
+        # use half the angle for symmetry
+        # i should really make a drawing to explain the math... :\
         # l = half the chord
         l = r1_*math.sin(angle/2)
         # r = r1-h (radius till the chord)
-        r = r1_*math.cos(angle/2)
-        return r,l
-        # l = half the width of the petal (for symmertry)
-        # the radius of the parabolid at point x is 2*pi*x so to get half the width of a petal, devide by 2*num_petals
-        return r1_, math.pi*x/self.num_petals
+        h = r1_*math.cos(angle/2)
+        return h,l
 
 
-    def generate_points(self, delta = .5):
+    def generate_points(self):
         list_of_ponts = [(0,0)]
         list_of_ponts_reverse = []
 
-        x = delta
+        x = self.delta
         r = 0
-        while self.get_r_or_x(r,x) <= self.maxx:
+        while self.get_r_or_x(r,x) <= self.max_value:
             r,l = self.r_l(x)
             list_of_ponts.append((l,r))
             list_of_ponts_reverse.insert(0,(-l,r))
-            x+=delta
-        print "Max x is ", (x-delta), "max y is", self.f(x)
+            x+=self.delta
+        print "Max x is ", (x-self.delta), "max y is", self.f(x)
         return list_of_ponts + list_of_ponts_reverse
 
     def draw_svg(self, name = "petal.svg"):
-        factor = 1
+
         generated_points =  self.generate_points()
         # some of the points are negative... adding this offset will move them to be non-negative.
-        offset = max([x for x,y in generated_points])
+        offset_x = max([x for x,y in generated_points])
         max_y = max([y for x,y in generated_points])
-        print "Max L is:",offset, "Max R is", max_y, "(width is", offset*2, ")"
-        height  = max_y + 10
-        width = offset*2+10
-        offset_y = 5
-        offset += 5
+        print "Max L is:",offset_x, "Max R is", max_y, "(width is", offset_x*2, ")"
+        height  = max_y + self.margin_y
+        width = offset_x*2+self.margin_x
+        offset_y  = (self.margin_y / 2)
+        offset_x += (self.margin_x / 2)
         dwg = svgwrite.Drawing(filename=name, size=(width*cm,  height*cm), viewBox=('0 0 %d %d'%(width, height)), debug=True)
         shapes = dwg.add(dwg.g(id='shapes'))
-        generated_points = [(x*factor, y*factor) for x,y in generated_points]
-        points = [(x+offset, y+offset_y) for x,y in  generated_points]
+        points = [(x+offset_x, y+offset_y) for x,y in  generated_points]
         # set presentation attributes at object creation as SVG-Attributes
         polygon = shapes.add(dwg.polygon(points=points, stroke='blue', fill="none",
-                              stroke_width=.1))
+                              stroke_width=self.stroke_width))
 
-        circle = shapes.add(dwg.circle(center = (0+offset, self.screwrad +offset_y), r = self.screwhole,  stroke='blue', fill="none",
-                      stroke_width=.1))
+        circle = shapes.add(dwg.circle(center = (0+offset_x, self.screwrad +offset_y), r = self.screwhole,  stroke='blue', fill="none",
+                      stroke_width=self.stroke_width))
         dwg.save()
 
 
@@ -127,14 +133,14 @@ class ParabolicReflector(object):
         dwg = svgwrite.Drawing(filename=name, size=(width*cm,  height*cm), viewBox=('0 0 %d %d'%(width, height)), debug=True)
         shapes = dwg.add(dwg.g(id='shapes'))
         # set presentation attributes at object creation as SVG-Attributes
-        circle = shapes.add(dwg.circle(center = (rad,rad), r = rad, stroke='blue', fill="none", stroke_width=.1))
-        circle = shapes.add(dwg.circle(center = (rad,rad), r = self.screwhole,  stroke='blue', fill="none",
-                              stroke_width=.1))
+        circle = shapes.add(dwg.circle(center = (rad,rad), r = rad, stroke='blue', fill="none", stroke_width=self.stroke_width))
+        circle = shapes.add(dwg.circle(center = (rad,rad), r = self.centerhole,  stroke='blue', fill="none",
+                              stroke_width=self.stroke_width))
         for i in range(self.num_petals):
             x = self.screwrad*math.sin(2*math.pi*i/self.num_petals)
             y = self.screwrad*math.cos(2*math.pi*i/self.num_petals)
             circle = shapes.add(dwg.circle(center = (rad+x,rad+y), r = self.screwhole,  stroke='blue', fill="none",
-                              stroke_width=.1))
+                              stroke_width=self.stroke_width))
 
         dwg.save()
 
