@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="explaination.svg">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="885.52305 : 501.89538 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective2989" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="416.41612"
+     inkscape:cy="678.89389"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1524"
+     inkscape:window-height="846"
+     inkscape:window-x="1985"
+     inkscape:window-y="24"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="arc"
+       style="fill:#808080;stroke:#ff0000;stroke-width:5.50000000000000000;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3005"
+       sodipodi:cx="222.85715"
+       sodipodi:cy="322.36218"
+       sodipodi:rx="228.57143"
+       sodipodi:ry="228.57143"
+       d="M 57.366502,164.6988 A 228.57143,228.57143 0 0 1 378.31866,154.8014 L 222.85715,322.36218 z"
+       transform="translate(164.28571,190)"
+       sodipodi:start="3.9027741"
+       sodipodi:end="5.4603482" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#0000ff;stroke:#52a361;stroke-width:5.50000000000000000;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3005-0"
+       sodipodi:cx="222.85715"
+       sodipodi:cy="322.36218"
+       sodipodi:rx="228.57143"
+       sodipodi:ry="228.57143"
+       d="m 114.54511,121.08278 a 228.57143,228.57143 0 0 1 217.00586,0.20591 L 222.85715,322.36218 z"
+       transform="translate(164.50016,189.20211)"
+       sodipodi:start="4.2187141"
+       sodipodi:end="5.2079616" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:6,3;stroke-dashoffset:0"
+       d="m 386.88843,511.93057 0,-231.32493"
+       id="path3797"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
+       x="-463.31046"
+       y="378.83115"
+       id="text3818"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan3820"
+         x="-463.31046"
+         y="378.83115"
+         style="font-size:16px;line-height:125%">α/2</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path3822"
+       sodipodi:cx="415.42523"
+       sodipodi:cy="377.58029"
+       sodipodi:rx="63.387074"
+       sodipodi:ry="50.507626"
+       d="m 397.72698,329.08134 a 63.387074,50.507626 0 0 1 45.85137,3.24642"
+       sodipodi:start="4.4294186"
+       sodipodi:end="5.1726099"
+       sodipodi:open="true"
+       transform="translate(-57.073619,93.43911)" />
+    <path
+       style="fill:none;stroke:#ffc000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.87214613;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 281.83256,310.91021 104.04571,0 1.01016,198.49498"
+       id="path3824"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
+       x="289.91379"
+       y="304.34424"
+       id="text3826"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3828"
+         x="289.91379"
+         y="304.34424"
+         style="font-size:16px">L=sin(α/2)*r1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
+       x="310.62192"
+       y="380.10565"
+       id="text3830"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3832"
+         x="310.62192"
+         y="380.10565">r1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
+       x="398.00009"
+       y="367.47876"
+       id="text3834"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3836"
+         x="398.00009"
+         y="367.47876"
+         style="font-size:16px">h=cos(α/2)*r1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:sans-serif"
+       x="224.75894"
+       y="320.00159"
+       id="text3860"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3862"
+         x="224.75894"
+         y="320.00159"
+         style="font-size:18px;fill:#ff0000">w/2</tspan></text>
+  </g>
+</svg>
